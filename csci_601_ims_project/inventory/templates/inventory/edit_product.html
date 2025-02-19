@@ -1,0 +1,21 @@
+<!-- inventory/templates/inventory/edit_product.html -->
+
+<!-- Edit or Update Products -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Product</title>
+  </head>
+  <body>
+    <h1>Edit Product: {{ product.product_name }}</h1>
+
+    <form method="POST">
+      {% csrf_token %}
+      <!-- Django auto-generates form fields -->
+      {{ form.as_p }}
+      <button type="submit">Save Changes</button>
+    </form>
+
+    <a href="{% url 'product_list' %}">Cancel</a>
+  </body>
+</html>
