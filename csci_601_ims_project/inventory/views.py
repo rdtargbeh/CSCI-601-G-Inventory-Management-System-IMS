@@ -151,6 +151,7 @@ def dashboard(request):
         'today_sales': today_sales,
         'recent_transactions': recent_transactions,
     })
+
 # def dashboard(request):
 #     """
 #     Fetches dashboard data including statistics, stock alerts, and recent transactions.

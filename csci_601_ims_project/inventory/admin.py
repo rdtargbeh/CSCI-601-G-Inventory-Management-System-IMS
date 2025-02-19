@@ -32,12 +32,35 @@ class ReportAdmin(admin.ModelAdmin):
     list_filter = ('report_type', 'format', 'generated_date')
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'role', 'date_joined', 'is_staff', 'is_active')
-    list_filter = ('role', 'is_active', 'is_staff')
-    search_fields = ('username', 'email')
-    ordering = ('date_joined',)
+    list_display = ('username', 'first_name', 'last_name', 'email', 'role', 'is_staff', 'is_active')  # ✅ Show first & last name
+    list_filter = ('role', 'is_staff', 'is_active')
+    search_fields = ('username', 'email', 'first_name', 'last_name')  # ✅ Make first & last name searchable
+    ordering = ('username',)
 
-admin.site.register(User, CustomUserAdmin)
+    # ✅ Avoid duplicate fields by modifying only 'fieldsets' and not duplicating default fields
+    fieldsets = (
+        ('User Information', {'fields': ('username', 'password')}),
+        ('Personal Information', {'fields': ('first_name', 'last_name', 'email', 'role')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important Dates', {'fields': ('last_login', 'date_joined')}),
+    )
+
+admin.site.register(User, CustomUserAdmin)  # ✅ Register the updated admin panel
+
+
+
+# class CustomUserAdmin(UserAdmin):
+#     list_display = ('username', 'first_name', 'last_name', 'email', 'role', 'is_staff', 'is_active')  # ✅ Show first & last name
+#     list_filter = ('role', 'is_staff', 'is_active')
+#     search_fields = ('username', 'email', 'first_name', 'last_name')  # ✅ Make first & last name searchable
+#     ordering = ('username',)
+#     # ordering = ('date_joined',)
+#     fieldsets = UserAdmin.fieldsets + (  # ✅ Add first_name & last_name to edit form
+#         ('Personal Information', {'fields': ('first_name', 'last_name', 'role')}),
+#     )
+
+
+# admin.site.register(User, CustomUserAdmin)
 
 # @admin.register(User)
 # class UserAdmin(admin.ModelAdmin):

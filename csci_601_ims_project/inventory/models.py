@@ -109,11 +109,12 @@ class User(AbstractUser):  # Inherits from Django's built-in User model
     user_permissions = models.ManyToManyField(
         'auth.Permission', related_name='inventory_user_permissions', blank=True  # ✅ Fix clash
     )
-
+    
     password = models.CharField(max_length=128, default='pbkdf2_sha256$216000$randomsalt$hashedpassword')  # ✅ Default password
-
+    
     def __str__(self):
-        return self.username
+        return f"{self.first_name} {self.last_name} ({self.username})"  # ✅ Display full name in admin
+
     
 
 

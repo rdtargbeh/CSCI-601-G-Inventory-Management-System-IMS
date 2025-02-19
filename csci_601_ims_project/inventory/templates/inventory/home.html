@@ -1,14 +1,26 @@
 <!-- path: inventory / templates / inventory / home.html -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IMS Home</title>
+    <title>Home - Inventory Management System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <h1>Welcome to the Inventory management System</h1>
-    <a href="{% url 'product_list' %}">View Products</a>
+    <div class="container mt-5">
+      <h1 class="text-center">Welcome to the Inventory Management System</h1>
+      <p class="text-center">
+        Manage products, transactions, and reports easily.
+      </p>
+      <div class="text-center">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary"
+          >Go to Dashboard</a
+        >
+        <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+      </div>
+    </div>
   </body>
 </html>

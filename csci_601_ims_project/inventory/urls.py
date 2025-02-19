@@ -9,7 +9,7 @@ from . import views
 urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('', include('inventory.urls')),  # ✅ Include the app's URLs
-    # path('', views.home, name='home'),  # Home Page
+    path('', views.home, name='home'),  # Home Page
     path('products/', views.product_list, name='product_list'),  # Product List Page
     path('products/add/', views.add_product, name='add_product'),  # New URL for adding products
     path('products/edit/<int:product_id>/', views.edit_product, name='edit_product'),  # Edit product URL
@@ -23,4 +23,4 @@ urlpatterns = [
 ]
 
 
-# handler403 = 'inventory.views.unauthorized_access'
+handler403 = 'inventory.views.unauthorized_access'
