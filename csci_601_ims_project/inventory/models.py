@@ -10,7 +10,8 @@ class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=50, unique=True)
     category = models.CharField(max_length=50)
-    sku = models.CharField(max_length=30, unique=True)
+    sku = models.CharField(max_length=30, unique=True, blank=True, null=True)  # ✅ Allow blank SKU
+    # sku = models.CharField(max_length=30, unique=True)
     barcode = models.CharField(max_length=50, unique=True, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField(default=0)

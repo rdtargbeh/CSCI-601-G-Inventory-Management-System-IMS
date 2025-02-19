@@ -22,21 +22,3 @@ def role_required(allowed_roles=None):
 
         return wrapper
     return decorator
-
-    # def decorator(view_func):
-    #     @wraps(view_func)
-    #     def wrapper(request, *args, **kwargs):
-    #         if not request.user.is_authenticated:
-    #         # if not request.user or not request.user.is_authenticated:
-    #             return redirect('login')  # ✅ Redirect to login if not authenticated
-
-    #         # ✅ Safely get user role to avoid AttributeError
-    #         user_role = getattr(request.user, 'role', None)  
-
-    #         if user_role in allowed_roles:
-    #             return view_func(request, *args, **kwargs)
-
-    #         raise PermissionDenied  # ✅ Show 403 Forbidden error if unauthorized
-
-    #     return wrapper
-    # return decorator

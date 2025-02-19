@@ -67,6 +67,16 @@ form button {
   cursor: pointer;
 }
 
+.btn-primary {
+  font-size: 24px;
+}
+
+.btn-secondary {
+  font-size: 20px;
+  background-color: #ddd;
+  color: black;
+}
+
 form input,
 form select,
 form textarea {

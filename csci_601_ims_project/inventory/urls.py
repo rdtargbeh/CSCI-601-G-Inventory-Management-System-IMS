@@ -20,7 +20,14 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     
+
+    # path('products/add/', views.product_form, name='add_product'),  # ✅ Add Product
+    # path('products/edit/<int:product_id>/', views.product_form, name='edit_product'),  # ✅ Edit Product
+ 
+
+
 ]
 
 
 handler403 = 'inventory.views.unauthorized_access'
+

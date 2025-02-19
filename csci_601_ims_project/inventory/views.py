@@ -35,18 +35,20 @@ def add_product(request):
 
 # View to update/edit a product   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def edit_product(request, product_id):
-    """
-    Fetches the product by ID, displays the existing data in a form, and allows the user to update it.
-    """
-    product = get_object_or_404(Product, pk=product_id) # Get product or return 404 if not found
+    product = get_object_or_404(Product, pk=product_id)  # ✅ Fetch existing product
 
     if request.method == "POST":
-        form = ProductForm(request.POST, instance=product)   # Pre-fill the form with existing product data
+        print("Received POST request:", request.POST)  # ✅ Debugging
+        form = ProductForm(request.POST, instance=product)  # ✅ Bind form to the product instance
+        
         if form.is_valid():
-            form.save()     # Save the updated product
-            return redirect('product_list')    # Redirect to product list after saving
+            form.save()  # ✅ Save updated data to database
+            print("Product updated successfully!")  # ✅ Debugging
+            return redirect('product_list')  # ✅ Redirect after update
+        else:
+            print("Form is not valid. Errors:", form.errors)  # ✅ Show errors if form is invalid
     else:
-        form = ProductForm(instance=product)    # Load existing product data into the form
+        form = ProductForm(instance=product)  # ✅ Preload product data into form
 
     return render(request, 'inventory/edit_product.html', {'form': form, 'product': product})
 
@@ -86,6 +88,10 @@ def record_transaction(request):
 
 
 # View for transaction Lists  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# def transaction_list(request):
+#     transactions = Transaction.objects.all().order_by('-transaction_date')  # ✅ Sort by latest transactions
+#     return render(request, 'inventory/transaction_list.html', {'transactions': transactions})
+
 def transaction_list(request):
     """
     Displays a list of transactions with filtering and searching.
@@ -151,29 +157,6 @@ def dashboard(request):
         'today_sales': today_sales,
         'recent_transactions': recent_transactions,
     })
-
-# def dashboard(request):
-#     """
-#     Fetches dashboard data including statistics, stock alerts, and recent transactions.
-#     """
-#     # total_users = User.objects.count()
-#     total_employees = User.objects.exclude(role='Customer').count()
-#     total_sales = Transaction.objects.filter(transaction_type="Sale").count()
-#     today_sales = Transaction.objects.filter(transaction_type="Sale").count()
-#     total_products = Product.objects.count()
-#     low_stock_products = Product.objects.filter(stock__lt=5)
-#     recent_transactions = Transaction.objects.all().order_by('-transaction_date')[:5]  # Last 5 transactions
-
-#     return render(request, 'inventory/dashboard.html', {
-#         # 'total_users': total_users,
-#         'total_employees': total_employees,
-#         'total_sales': total_sales,
-#         'today_sales': today_sales,
-#         'total_products': total_products,
-#         'low_stock_products': low_stock_products,
-#         'recent_transactions': recent_transactions,  # Pass transactions to template
-#     })
-#    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 def user_logout(request):

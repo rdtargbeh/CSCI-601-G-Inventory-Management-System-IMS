@@ -6,24 +6,116 @@
     <title>Product List</title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'inventory/styles.css' %}" />
-  </head>
-  <body>
-    <h1>Product List</h1>
-    <a href="{% url 'add_product' %}">Add New Product</a>
-    <ul>
-      {% for product in products %}
-      <li>
-        {{ product.product_name}} - ${{ product.price}}
 
-        <!-- Add an Edit or update button -->
-        <a href="{% url 'edit_product' product.product_id %}">Edit</a> |
-        <!-- Add a Delete button -->
-        <a href="{% url 'delete_product' product.product_id %}">Delete</a>
-      </li>
-      {% empty %}
-      <li>No products available.</li>
-      {% endfor %}
-    </ul>
+    <!-- ✅ Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- ✅ Custom CSS (Optional) -->
+    <link rel="stylesheet" href="{% static 'inventory/styles.css' %}" />
+
+    <style>
+      /* ✅ Centered Page */
+      .container {
+        margin-top: 40px;
+      }
+
+      /* ✅ Table Styling */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        background: white;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #007bff;
+        color: white;
+      }
+
+      tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* ✅ Action Buttons */
+      .btn-action {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <h2 class="text-center mb-4">Product List</h2>
+
+      <!-- ✅ Add New Product Button -->
+      <div class="text-end mb-3">
+        <a href="{% url 'add_product' %}" class="btn btn-success"
+          >+ Add New Product</a
+        >
+      </div>
+
+      <!-- ✅ Product Table -->
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td>{{ product.product_id }}</td>
+              <td>{{ product.product_name }}</td>
+              <td>{{ product.category }}</td>
+              <td>${{ product.price }}</td>
+              <td>{{ product.stock }}</td>
+              <td>
+                <a
+                  href="{% url 'edit_product' product.product_id %}"
+                  class="btn btn-warning btn-sm btn-action"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'delete_product' product.product_id %}"
+                  class="btn btn-danger btn-sm btn-action"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" class="text-center text-muted">
+                No products available
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ✅ Back to Dashboard -->
+      <div class="text-center mt-3">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary"
+          >Back to Dashboard</a
+        >
+      </div>
+    </div>
+
+    <!-- ✅ Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

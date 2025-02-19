@@ -6,6 +6,7 @@ from .models import Transaction
 
 # Add Product Form
 class ProductForm(forms.ModelForm):
+    sku = forms.CharField(required=False)  # ✅ Make SKU optional in the form
     class Meta:
         model = Product
         fields = ['product_name', 'category', 'sku', 'price', 'stock', 'supplier', 'description']

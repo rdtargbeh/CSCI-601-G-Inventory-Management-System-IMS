@@ -1,47 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction History</title>
+
+    {% load static %}
+    
+    <!-- ✅ Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- ✅ Custom CSS -->
+    <link rel="stylesheet" href="{% static 'inventory/styles.css' %}" />
+
+    <style>
+        /* ✅ Center the content */
+        .container {
+            margin-top: 30px;
+        }
+
+        /* ✅ Table styling */
+        .table {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* ✅ Add padding to the header */
+        .page-title {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* ✅ Filter form spacing */
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-form input,
+        .filter-form select {
+            padding: 5px;
+            width: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Transaction History</h1>
-    
-    <!-- Search & Filter Form -->
-    <form method="GET">
-        <label for="transaction_type">Filter by Type:</label>
-        <select name="transaction_type">
-            <option value="">All</option>
-            {% for type_code, type_name in transaction_types %}
-                <option value="{{ type_code }}" {% if request.GET.transaction_type == type_code %}selected{% endif %}>
-                    {{ type_name }}
-                </option>
-            {% endfor %}
-        </select>
 
-        <label for="product_name">Search by Product:</label>
-        <input type="text" name="product_name" placeholder="Enter product name" value="{{ request.GET.product_name }}">
+    <div class="container">
+        <h2 class="page-title text-center">Transaction History</h2>
 
-        <label for="start_date">Start Date:</label>
-        <input type="date" name="start_date" value="{{ request.GET.start_date }}">
-        
-        <label for="end_date">End Date:</label>
-        <input type="date" name="end_date" value="{{ request.GET.end_date }}">
+        <!-- ✅ Search & Filter Form -->
+        <form method="GET" class="filter-form">
+            <select name="transaction_type" class="form-select">
+                <option value="">Filter by Type (All)</option>
+                {% for type_code, type_name in transaction_types %}
+                    <option value="{{ type_code }}" {% if request.GET.transaction_type == type_code %}selected{% endif %}>
+                        {{ type_name }}
+                    </option>
+                {% endfor %}
+            </select>
 
-        <button type="submit">Filter</button>
-        <a href="{% url 'transaction_list' %}">Reset</a>  <!-- Reset Filters -->
-    </form>
+            <input type="text" name="product_name" class="form-control" placeholder="Search by Product Name" value="{{ request.GET.product_name }}">
 
-    <ul>
-        {% for transaction in transactions %}
-            <li>
-                {{ transaction.transaction_type }} - {{ transaction.product.product_name }}
-                ({{ transaction.quantity }} units) on {{ transaction.transaction_date|date:"Y-m-d H:i" }}
-            </li>
-        {% empty %}
-            <li>No transactions found.</li>
-        {% endfor %}
-    </ul>
+            <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+            <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
 
-    <a href="{% url 'product_list' %}">Back to Products</a>
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a href="{% url 'transaction_list' %}" class="btn btn-secondary">Reset</a>
+        </form>
+
+        <!-- ✅ Transaction Table -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Type</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total Cost</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ transaction.product.product_name }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if transaction.transaction_type == 'Sale' %}bg-danger
+                                {% elif transaction.transaction_type == 'Purchase' %}bg-success
+                                {% elif transaction.transaction_type == 'Return' %}bg-warning text-dark
+                                {% else %}bg-info{% endif %}">
+                                {{ transaction.transaction_type }}
+                            </span>
+                        </td>
+                        <td>{{ transaction.quantity }}</td>
+                        <td>${{ transaction.unit_price }}</td>
+                        <td>${{ transaction.total_cost }}</td>
+                        <td>{{ transaction.transaction_date|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">No transactions found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ✅ Add New Transaction Button -->
+        <div class="text-end mt-3">
+            <a href="{% url 'record_transaction' %}" class="btn btn-success">Add New Transaction</a>
+        </div>
+
+        <!-- ✅ Back to Dashboard -->
+        <div class="text-center mt-3">
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <!-- ✅ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
