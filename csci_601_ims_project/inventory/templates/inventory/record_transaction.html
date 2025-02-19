@@ -1,0 +1,18 @@
+<!-- inventory/templates/inventory/record_transaction.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Record Transaction</title>
+  </head>
+  <body>
+    <h1>Record a New Transaction</h1>
+
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <!-- Auto-generates form fields -->
+      <button type="submit">Save Transaction</button>
+    </form>
+
+    <a href="{% url 'product_list' %}">Back to Products</a>
+  </body>
+</html>

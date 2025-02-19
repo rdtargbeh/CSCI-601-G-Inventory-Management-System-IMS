@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product List</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'inventory/styles.css' %}" />
+  </head>
+  <body>
+    <h1>Product List</h1>
+    <a href="{% url 'add_product' %}">Add New Product</a>
+    <ul>
+      {% for product in products %}
+      <li>
+        {{ product.product_name}} - ${{ product.price}}
+
+        <!-- Add an Edit or update button -->
+        <a href="{% url 'edit_product' product.product_id %}">Edit</a> |
+        <!-- Add a Delete button -->
+        <a href="{% url 'delete_product' product.product_id %}">Delete</a>
+      </li>
+      {% empty %}
+      <li>No products available.</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

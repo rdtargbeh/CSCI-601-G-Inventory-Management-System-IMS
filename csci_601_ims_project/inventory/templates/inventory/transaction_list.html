@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transaction History</title>
+</head>
+<body>
+    <h1>Transaction History</h1>
+    
+    <!-- Search & Filter Form -->
+    <form method="GET">
+        <label for="transaction_type">Filter by Type:</label>
+        <select name="transaction_type">
+            <option value="">All</option>
+            {% for type_code, type_name in transaction_types %}
+                <option value="{{ type_code }}" {% if request.GET.transaction_type == type_code %}selected{% endif %}>
+                    {{ type_name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="product_name">Search by Product:</label>
+        <input type="text" name="product_name" placeholder="Enter product name" value="{{ request.GET.product_name }}">
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" name="start_date" value="{{ request.GET.start_date }}">
+        
+        <label for="end_date">End Date:</label>
+        <input type="date" name="end_date" value="{{ request.GET.end_date }}">
+
+        <button type="submit">Filter</button>
+        <a href="{% url 'transaction_list' %}">Reset</a>  <!-- Reset Filters -->
+    </form>
+
+    <ul>
+        {% for transaction in transactions %}
+            <li>
+                {{ transaction.transaction_type }} - {{ transaction.product.product_name }}
+                ({{ transaction.quantity }} units) on {{ transaction.transaction_date|date:"Y-m-d H:i" }}
+            </li>
+        {% empty %}
+            <li>No transactions found.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'product_list' %}">Back to Products</a>
+</body>
+</html>

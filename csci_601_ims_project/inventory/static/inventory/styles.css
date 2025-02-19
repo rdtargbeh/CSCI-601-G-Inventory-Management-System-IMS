@@ -1,0 +1,179 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  margin: auto;
+  overflow: hidden;
+}
+
+/* Product List Styling */
+.product-card {
+  background: white;
+  padding: 15px;
+  margin: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 8px 15px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background: #0056b3;
+}
+
+/* Product Image */
+.product-image {
+  max-width: 80px;
+  height: auto;
+  margin-right: 10px;
+}
+
+/* Centering Forms */
+.form-container {
+  background: white;
+  padding: 20px;
+  max-width: 500px;
+  margin: 50px auto; /* Centers the form */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center; /* Centers form text */
+}
+
+form button {
+  width: 100%;
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%; /* Makes form fields full width */
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: block; /* Ensures each field is on a new line */
+}
+
+/* New Content Added */
+
+.wrapper {
+  display: flex;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #2c3e50;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-top: 20px;
+}
+
+.sidebar .logo {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar ul li a:hover {
+  background: #1a252f;
+}
+
+/* Content Area */
+.content {
+  margin-left: 260px;
+  padding: 20px;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 200px;
+  margin: 10px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.card-blue {
+  background: #3498db;
+}
+.card-green {
+  background: #2ecc71;
+}
+.card-orange {
+  background: #f39c12;
+}
+.card-red {
+  background: #e74c3c;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #2c3e50;
+  color: white;
+}

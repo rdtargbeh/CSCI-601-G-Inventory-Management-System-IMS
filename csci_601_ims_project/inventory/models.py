@@ -26,6 +26,21 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+# CREATE INVENTORY MODEL OR ENTITY
+class Inventory(models.Model):
+    inventory_id = models.AutoField(primary_key=True)
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    warehouse_location = models.CharField(max_length=100, default='Main Warehouse')
+    batch_number = models.CharField(max_length=50, blank=True, null=True)
+    last_stock_check = models.DateField(auto_now=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.product.product_name} - {self.quantity} in stock"
+    
+
+
 # CREATE TRANSACTION MODEL OR ENTITY
 class Transaction(models.Model):
     TRANSACTION_TYPES = [
@@ -88,6 +103,13 @@ class User(AbstractUser):  # Inherits from Django's built-in User model
     ]
     
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='Staff')
+    groups = models.ManyToManyField(
+        'auth.Group', related_name='inventory_users', blank=True  # ✅ Fix clash
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission', related_name='inventory_user_permissions', blank=True  # ✅ Fix clash
+    )
+
     password = models.CharField(max_length=128, default='pbkdf2_sha256$216000$randomsalt$hashedpassword')  # ✅ Default password
 
     def __str__(self):

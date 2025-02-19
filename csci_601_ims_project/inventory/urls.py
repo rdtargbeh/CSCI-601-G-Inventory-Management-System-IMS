@@ -7,7 +7,7 @@ from inventory.views import unauthorized_access  # ✅ Import the 403 error view
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     # path('', include('inventory.urls')),  # ✅ Include the app's URLs
     # path('', views.home, name='home'),  # Home Page
     path('products/', views.product_list, name='product_list'),  # Product List Page
